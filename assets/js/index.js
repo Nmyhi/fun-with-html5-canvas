@@ -12,13 +12,13 @@ let isDrawing = false; // it will only draw if I push the mouse button down
 let lastX = 0;
 let lastY = 0;
 let hue = 0;
+let direction = true;
 
 
 function draw(e) {
-    if(!isDrawing) return; // stop the fn from running when they are not moused down
+    if (!isDrawing) return; // stop the fn from running when they are not moused down
     console.log(e);
     ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-    ctx.lineWidth = hue;
     ctx.beginPath();
     // strart from
     ctx.moveTo(lastX, lastY);
@@ -29,9 +29,20 @@ function draw(e) {
     [lastX, lastY] = [e.offsetX, e.offsetY];
     
     hue++;
-    if(hue >= 360) {
+    if (hue >= 360) {
         hue = 0;
     }
+
+    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+        direction = !direction;
+    }
+
+    if (direction) {
+        ctx.lineWidth++;
+    } else {
+        ctx.lineWidth--;
+    }
+
 }
 
 canvas.addEventListener('mousedown', (e) => {
