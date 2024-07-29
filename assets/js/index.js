@@ -5,16 +5,19 @@ canvas.height = window.innerHeight;
 ctx.strokeStyle = '#BADA55';
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
+ctx.lineWidth = 100;
 
 let isDrawing = false; // it will only draw if I push the mouse button down
 
 let lastX = 0;
 let lastY = 0;
+let hue = 0;
 
 
 function draw(e) {
     if(!isDrawing) return; // stop the fn from running when they are not moused down
     console.log(e);
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
     ctx.beginPath();
     // strart from
     ctx.moveTo(lastX, lastY);
@@ -23,6 +26,7 @@ function draw(e) {
     ctx.stroke();
     // set lastX and lastY with destructuring array
     [lastX, lastY] = [e.offsetX, e.offsetY];
+    hue++;
 }
 
 canvas.addEventListener('mousedown', (e) => {
